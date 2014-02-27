@@ -1,0 +1,7 @@
+---
+# file: site.yml
+- hosts: all
+  sudo: true
+  roles:
+    - common
+    - pandoc

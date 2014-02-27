@@ -1,0 +1,3 @@
+- include: haskell.yml
+- include: texlive.yml
+- include: pandoc.yml

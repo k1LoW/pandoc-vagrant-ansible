@@ -1,0 +1,16 @@
+---
+- name: justhubを設定
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - http://sherkin.justhub.org/el6/RPMS/x86_64/justhub-release-2.0-4.0.el6.x86_64.rpm
+- name: Haskellをインストール
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - haskell
+- name: cabalをアップデート
+  command: cabal update
+  sudo: false
+- name: cabal-installをアップデート
+  command: cabal install cabal-install
+  sudo: false
+

@@ -1,0 +1,13 @@
+---
+- name: Pandocをインストール
+  command: cabal install pandoc
+  sudo: false
+- name: .bashrc
+  lineinfile:
+    dest=/home/vagrant/.bashrc
+    line="export PATH=$HOME/.cabal/bin:$PATH"
+    regexp="^export PATH=$HOME/.cabal/"
+    owner=vagrant
+    state=present
+    insertafter=EOF
+

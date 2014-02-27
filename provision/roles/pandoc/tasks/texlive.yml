@@ -1,0 +1,40 @@
+---
+- name: TeXLiveがインストール済みが確認
+  command: ls /usr/local/texlive/2013/
+  register: result
+  ignore_errors: true
+- name: TeXLiveインストーラを取得
+  get_url: url=http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz dest=/tmp/install-tl-unx.tar.gz
+  when: result | failed
+- name: tar.gzを解凍
+  command: chdir=/tmp/ /bin/tar xvf /tmp/install-tl-unx.tar.gz
+  when: result | failed
+- name: TeXLiveインストーラを実行
+  raw: cd /tmp/install-tl-201*; yes I | ./install-tl
+  when: result | failed
+- name: .bashrc
+  lineinfile:
+    dest=/home/vagrant/.bashrc
+    line="export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/:$MANPATH"
+    regexp="^export MANPATH=/usr/local/texlive/2013"
+    owner=vagrant
+    state=present
+    insertafter=EOF
+- name: .bashrc
+  lineinfile:
+    dest=/home/vagrant/.bashrc
+    line="export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH"
+    regexp="^export INFOPATH=/usr/local/texlive/2013"
+    owner=vagrant
+    state=present
+    insertafter=EOF
+- name: .bashrc
+  lineinfile:
+    dest=/home/vagrant/.bashrc
+    line="export PATH=/usr/local/texlive/2013/bin/x86_64-linux:$PATH"
+    regexp="^export PATH=/usr/local/texlive/2013"
+    owner=vagrant
+    state=present
+    insertafter=EOF
+
+
